@@ -1,0 +1,30 @@
+- name: create and delete ec2 and r 53 records
+  hosts: local
+  connection: local
+  vars:
+    sg_id: "sg-01d73528856414fb1"
+    ami_id: "ami-0220d79f3f480ecf5"
+    env: "Dev"
+    instances:
+    - mongodb
+    - catalogue
+
+  tasks:
+  - name: create ec2 instances
+    amazon.aws.ec2_instance:
+      instance_type: "t3.micro"
+      security_group: {{ sg_id }}
+      image_id: {{ ami_id }}
+      name: {{ item }}-{{ env }}
+      tags:
+        Environment: {{ env }}
+        project: "roboshop"
+        component: "{{ item }}"
+        Name: {{ item }}-{{ env }} 
+
+    loop:
+      {{ instances }}
+    register: ec2_output
+  - name: print ec2_output
+    ansible.builtin.debug:
+      msg: "{{ ec2_output }}"
