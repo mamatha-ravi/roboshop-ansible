@@ -11,11 +11,11 @@
       state: present
   - name: add system user
     ansible.builtin.user:
-    name: roboshop
-    shell: /sbin/nologin
-    comment: "roboshop system user"
-    home: /app
-    system: true
+      name: roboshop
+      shell: /sbin/nologin
+      comment: "roboshop system user"
+      home: /app
+      system: true
   - name: create app directory
     ansible.builtin.file:
       path: /app
