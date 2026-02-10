@@ -29,8 +29,11 @@
       src: /tmp/catalogue.zip
       dest: /app
       remote_src: yes
+
   - name: install npm dependencies
-    ansible.builtin.command: npm install
+    community.general.npm:
+    path: /app
+    state: present
 
   - name: copy catalogue sercice
     ansible.builtin.copy:
