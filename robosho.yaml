@@ -1,5 +1,5 @@
 - name: create and delete ec2 and r 53 records
-  hosts: local
+  hosts: all
   connection: local
   vars:
     sg_id: "sg-01d73528856414fb1"
