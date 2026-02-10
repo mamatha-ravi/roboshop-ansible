@@ -5,6 +5,7 @@
     sg_id: "sg-01d73528856414fb1"
     ami_id: "ami-0220d79f3f480ecf5"
     env: "Dev"
+    domain_name: "devops88s.online"
     instances:
     - mongodb
     - catalogue
@@ -28,3 +29,12 @@
   - name: print ec2_output
     ansible.builtin.debug:
       msg: "{{ ec2_output }}"
+  - name: create r53 records
+    amazon.aws.route53:
+      state: present
+      zone: "{{ domain_name }}"
+      record: 
+      type: A
+      ttl: 7200
+      value: 1.1.1.1,2.2.2.2,3.3.3.3
+      wait: true
