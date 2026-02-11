@@ -57,17 +57,18 @@
     ansible.builtin.debug:
       msg: "{{ db_output }}"  
 
-  # - name: load catalogue products 
-  #   ansible.builtin.shell: mongosh --host "{{ MONGODB_HOST }}" </app/db/master-data.js
+  - name: load catalogue products 
+    ansible.builtin.shell: mongosh --host "{{ MONGODB_HOST }}" </app/db/master-data.js
+    when: db_output.stdout | int < o
 
-  # - name: daemon reload 
-  #   ansible.builtin.systemd_service:
-  #     name: catalogue
-  #     daemon_reload: true
+  - name: daemon reload 
+    ansible.builtin.systemd_service:
+      name: catalogue
+      daemon_reload: true
 
-  # - name: enable and start catalogue
-  #   ansible.builtin.service:
-  #   name: catalogue
-  #   state: started
-  #   enabled: yes
+  - name: enable and start catalogue
+    ansible.builtin.service:
+    name: catalogue
+    state: restarted
+    enabled: yes
      
