@@ -1,3 +1,4 @@
+#ansible-playbook -i localhost, -e 'instances=["mongodb", "catalogue","redis","user","cart","mysql","shipping","rabbitmq","payment","frontend"]' roboshop.yaml
 - name: create and delete ec2 and r 53 records
   hosts: all
   connection: local
@@ -7,10 +8,12 @@
     env: "Dev"
     domain_name: "devops88s.online"
     action: delete
-    instances:
-    - mongodb
-    - catalogue
-
+    # instances:
+    # - mongodb
+    # - catalogue
+  vars_files:
+  - vars.yaml
+   
   tasks:
   - name: create ec2 instances
     amazon.aws.ec2_instance:
@@ -58,14 +61,7 @@
     when: 
     - item.item == "frontend"
     - action == "create" 
-
-  - name: delete ec2 instances
-    amazon.aws.ec2_instance:
-      state: absent
-      name: "{{ item }}-{{ env }}"
-    loop: "{{ instances }}"
-    when: action == "delete"
-
+  
   - name: delete r53 records
     amazon.aws.route53:
       state: present
@@ -75,3 +71,12 @@
       ttl: 1
     loop: "{{ instances }}"
     when: action == "delete"
+
+  - name: delete ec2 instances
+    amazon.aws.ec2_instance:
+      state: absent
+      name: "{{ item }}-{{ env }}"
+    loop: "{{ instances }}"
+    when: action == "delete"
+
+ 
