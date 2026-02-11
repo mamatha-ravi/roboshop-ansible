@@ -50,7 +50,7 @@
       state: present
 
   - name: check whether catalogue db alresdy exists
-    ansible.builtin.command: mongosh --host $DB_HOST --quiet  --eval 'db.getMongo().getDBNames().indexOf("catalogue")'  
+    ansible.builtin.command: mongosh --host "{{ MONGODB_HOST }}" --quiet  --eval 'db.getMongo().getDBNames().indexOf("catalogue")'  
     register: db_output
 
   - name: print db_output
