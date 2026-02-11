@@ -26,7 +26,8 @@
     ansible.builtin.file:
       path: /app
       state: directory
-  - name: delete app directory
+
+  - name: delete file
     ansible.builtin.file:
       path: /tmp/catalogue.zip
       state: absent   
