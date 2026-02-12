@@ -24,7 +24,7 @@
       security_group: "{{ sg_id }}"
       image_id: "{{ ami_id }}"
       name: "{{ item }}-{{ env }}"
-      wait: false  # will not wait creates faster
+      wait: true  # will not wait creates faster
       tags:
         Environment: "{{ env }}"
         project: "roboshop"
@@ -36,9 +36,9 @@
     register: ec2_output
     when: action == "create" 
 
-  # - name: print ec2_output
-  #   ansible.builtin.debug:
-  #     msg: "{{ ec2_output }}" 
+  - name: print ec2_output
+    ansible.builtin.debug:
+      msg: "{{ ec2_output }}" 
 
   - name: create r53 records
     amazon.aws.route53:
@@ -49,7 +49,7 @@
       ttl: 1
       value: "{{ item.instances[0].private_ip_address }}"
       overwrite: true
-      wait: false
+      wait: true
     loop: "{{ ec2_output.results }}"
     when: action == "create" 
 
@@ -62,7 +62,7 @@
       ttl: 1
       value: "{{ item.instances[0].public_ip_address }}"
       overwrite: true
-      wait: false
+      wait: true
     loop: "{{ ec2_output.results }}"
     when: 
     - item.item == "frontend"
