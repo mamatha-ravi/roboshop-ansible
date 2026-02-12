@@ -3,7 +3,7 @@
 # roboshop.yaml
 
 - name: create and delete ec2 and r 53 records
-  hosts: all
+  hosts: local
   connection: local
   vars:
     sg_id: "sg-01d73528856414fb1"
