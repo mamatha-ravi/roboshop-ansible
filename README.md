@@ -107,7 +107,6 @@ Redis · RabbitMQ · Nginx · systemd · Linux (RHEL)
  
 | Repo | Description |
 |------|-------------|
-| [roboshop-infra-dev](https://github.com/mamatha-ravi/roboshop-infra-dev) | Terraform infrastructure for these EC2 instances |
 | [terraform-aws-eks](https://github.com/mamatha-ravi/terraform-aws-eks) | Kubernetes version of the same project |
  
 ---
